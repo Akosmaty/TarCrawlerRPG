@@ -3,5 +3,6 @@ out/
 *.jar
 game.log
 assets/_download/
+*.md
 .DS_Store
 Thumbs.db

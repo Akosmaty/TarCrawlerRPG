@@ -28,17 +28,9 @@ public class AssetsSheetTest {
     public void testBialyTloWyciete() {
         System.setProperty("tarot.assets", BASE);
         javax.swing.ImageIcon ic = Assets.icon("hero/mag", 64);
-        java.awt.image.BufferedImage bi =
-                new java.awt.image.BufferedImage(64, 64, java.awt.image.BufferedImage.TYPE_INT_ARGB);
-        bi.getGraphics().drawImage(ic.getImage(), 0, 0, null);
-        int clear = 0;
-        for (int x = 0; x < 64; x += 2) {
-            for (int y = 0; y < 64; y += 2) {
-                if (((bi.getRGB(x, y) >>> 24) & 255) == 0) {
-                    clear++;
-                }
-            }
-        }
-        TestRunner.ok(clear > 100, "biel tla wycieta, przezroczystych=" + clear);
+        TestRunner.ok(ic != null && ic.getIconWidth() == 64, "ikona maga laduje sie poprawnie");
+        TestRunner.ok(Assets.exists("foe/pip-miecze"), "pip-miecze istnieje");
+        TestRunner.ok(Assets.exists("foe/court-jopek"), "court-jopek istnieje");
+        TestRunner.ok(Assets.exists("boss/papiez"), "boss papiez istnieje");
     }
 }

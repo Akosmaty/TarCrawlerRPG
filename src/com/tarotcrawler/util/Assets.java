@@ -180,18 +180,6 @@ public final class Assets {
         return img;
     }
 
-    private static boolean hasTransparentPixels(BufferedImage img) {
-        int w = Math.min(img.getWidth(), 4);
-        int h = Math.min(img.getHeight(), 4);
-        for (int x = 0; x < w; x++) {
-            for (int y = 0; y < h; y++) {
-                int a = (img.getRGB(x, y) >> 24) & 255;
-                if (a < 200) return true;
-            }
-        }
-        return false;
-    }
-
     private static ImageIcon sheetCell(SheetPos sp, int size) {
         BufferedImage sheet = sheetImage(sp.sheet);
         if (sheet == null) {
@@ -206,13 +194,7 @@ public final class Assets {
             return null;
         }
         BufferedImage cell = sheet.getSubimage(x0, y0, x1 - x0, y1 - y0);
-        boolean transparent = hasTransparentPixels(cell);
-        Image img;
-        if (transparent) {
-            img = cell.getScaledInstance(size, size, Image.SCALE_SMOOTH);
-        } else {
-            img = toTransparent(cell).getScaledInstance(size, size, Image.SCALE_SMOOTH);
-        }
+        Image img = cell.getScaledInstance(size, size, Image.SCALE_SMOOTH);
         return new ImageIcon(img);
     }
 
@@ -226,9 +208,7 @@ public final class Assets {
             if (src == null) {
                 return null;
             }
-            boolean hasAlpha = src.getColorModel().hasAlpha();
-            Image img = (hasAlpha ? src : toTransparent(src))
-                    .getScaledInstance(size, size, Image.SCALE_SMOOTH);
+            Image img = src.getScaledInstance(size, size, Image.SCALE_SMOOTH);
             return new ImageIcon(img);
         } catch (Exception e) {
             GameLog.warn("assets blad przy " + key + ": " + e.getMessage());
