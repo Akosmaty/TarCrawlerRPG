@@ -1,0 +1,7 @@
+out/
+*.class
+*.jar
+game.log
+assets/_download/
+.DS_Store
+Thumbs.db
